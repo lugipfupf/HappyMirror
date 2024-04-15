@@ -3,7 +3,8 @@ name = "happyMirror"
 version = "0.0.1"
 description = "WING IoT Project"
 dependencies = [
-    "flask"
+    "flask",
+    "requests"
 ]
 
 [build-system]
