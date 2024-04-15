@@ -1,0 +1,11 @@
+[project]
+name = "happyMirror"
+version = "0.0.1"
+description = "WING IoT Project"
+dependencies = [
+    "flask"
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
