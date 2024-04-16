@@ -1,3 +1,4 @@
+api_url = 'https://api.api-ninjas.com/v1/quotes?category='
 categories = [
     'age',
     'alone',

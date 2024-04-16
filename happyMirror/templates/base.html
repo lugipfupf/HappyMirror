@@ -18,7 +18,7 @@
         <div class="row">
             <div class="twelve columns"><h1 class="u-pull-right">Guten Tag</h1></div>
             <div class="twelve columns"><h3 id="fulldate" class="u-pull-right"></h3></div>
-            <div class="four columnns">{{ quote[0]["quote"] }} - {{ quote[0]["author"] }}</div>
+            <div class="four columnns">{{ data|safe }}</div>
         </div>
 
         {% endblock %}
