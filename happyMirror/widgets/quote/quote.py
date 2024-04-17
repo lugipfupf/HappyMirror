@@ -6,8 +6,12 @@ from flask import render_template_string
 
 from happyMirror.render import BaseRenderer, RenderResult
 
-import widget_secrets
-import widget_config
+try:
+    import widget_secrets
+    import widget_config
+except ImportError:
+    from . import widget_secrets
+    from . import widget_config
 
 
 class Renderer(BaseRenderer):

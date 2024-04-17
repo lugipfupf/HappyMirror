@@ -3,7 +3,11 @@ import importlib
 import sys
 
 from flask import Flask, render_template
-import config
+
+try:
+    import config
+except ImportError:
+    from . import config
 
 
 def create_app(widgets=None, test_config=None):
