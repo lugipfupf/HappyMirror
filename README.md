@@ -1,11 +1,12 @@
 # Developing widgets
-There a few sample widgets already included. On each page reload, each widgets `render()` is called and
+There a few sample widgets already included. On each page reload, each widgets `render()` method is called and
 a dictionary of type`RenderResult` is expected. Structure your module like so:
 
 ```python
+# filename must be same as package name
 from happyMirror.render import BaseRenderer, RenderResult
 
-class NamedAfterMyPackage(BaseRenderer):
+class Renderer(BaseRenderer):
     def render(self) -> RenderResult:
         # do your stuff
         
