@@ -30,14 +30,17 @@ def create_app(widgets=None, test_config=None):
 
     @app.route('/')
     def root():
-        for widget in widgets:
+        data = []
+
+        for cur_widget in widgets:
             try:
-                quote = widget['instance'].render()
-                print(quote)
-                return render_template('base.html', data=quote)
+                data.append(cur_widget['instance'].render())
+            except KeyError as e:
+                print(f"KeyError for: '{cur_widget}'", e)
             except AttributeError:
                 print("The module does not have the specified class or function.")
 
+        return render_template('base.html', data=data)
     return app
 
 
@@ -48,7 +51,8 @@ def load_widgets(enabled_widgets=None):
 
     for root, dirs, files in walk_level(os.curdir + '/widgets'):
         for dir_name in dirs:
-            loaded_widgets.append(load_single_widget(dir_name, enabled_widgets, root))
+            single_widget = load_single_widget(dir_name, enabled_widgets, root)
+            loaded_widgets.append(single_widget)
 
     return loaded_widgets
 
@@ -56,10 +60,9 @@ def load_widgets(enabled_widgets=None):
 def load_single_widget(dir_name, enabled_widgets, root):
     if dir_name in enabled_widgets:
         try:
-            print(f"{root}/{dir_name}")
             sys.path.append(f"{root}/{dir_name}")
             print(f"Importing widget '{dir_name}'")
-            widget_renderer = importlib.import_module('renderer')
+            widget_renderer = importlib.import_module(dir_name)
             print(f"Widget '{dir_name}' loaded")
 
             return {'module': widget_renderer, 'instance': None}

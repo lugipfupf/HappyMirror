@@ -1,15 +1,17 @@
-import os.path
 import random
 import requests
 import json
 
-from flask import Blueprint, Flask, render_template_string
+from flask import render_template_string
+
+from happyMirror.render import BaseRenderer, RenderResult
 
 import widget_secrets
 import widget_config
 
 
-class Renderer:
+class Renderer(BaseRenderer):
+
     def __init__(self, config=None, secrets_config=None) -> None:
         if secrets_config is None:
             self.secrets = widget_secrets
@@ -21,7 +23,6 @@ class Renderer:
         else:
             self.config = config
 
-
     def next(self):
         category = random.choice(self.config.categories)
 
@@ -31,7 +32,9 @@ class Renderer:
 
         return json.loads(quote.text)
 
-    def render(self):
+    def render(self) -> RenderResult:
         quote = self.next()
-        print(f"Quote: {quote[0]}")
-        return render_template_string('<h1>{{ quote[0]["quote"] }} - {{ quote[0]["author"] }}</h1>', quote=quote)
+        return {
+            'view': render_template_string('{{ quote[0]["quote"] }} - {{ quote[0]["author"] }}', quote=quote),
+            'name': 'quote'
+        }

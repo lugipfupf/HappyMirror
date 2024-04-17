@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <title>HappyMirror</title>
 
@@ -8,21 +7,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename = 'normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename = 'skeleton.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename = 'colors.css') }}">
-    <script src="{{ url_for('static', filename = 'clock.js')}}"></script>
+    {% for entry in data: %}
+    {% if entry['script'] %}
+    <script type="application/javascript">{{ entry['script'] | safe }}</script>
+    {% endif %}
+    {% endfor %}
 </head>
-
 <body>
-    <div class="container">
-        {% block body %}
-
-        <div class="row">
-            <div class="twelve columns"><h1 class="u-pull-right">Guten Tag</h1></div>
-            <div class="twelve columns"><h3 id="fulldate" class="u-pull-right"></h3></div>
-            <div class="four columnns">{{ data|safe }}</div>
-        </div>
-
-        {% endblock %}
+<div class="container">
+    {% for entry in data: %}
+    {% if entry['view'] %}
+    <div class="row">
+        <div class="twelve columns">{{ entry['view']|safe }}</div>
     </div>
+    {% endif %}
+    {% endfor %}
+</div>
 </body>
-
 </html>
