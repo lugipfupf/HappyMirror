@@ -1,6 +1,7 @@
 # Developing widgets
 There a few sample widgets already included. On each page reload, each widgets `render()` method is called and
 a dictionary of type`RenderResult` is expected. Structure your module like so:
+The widget loader will try to load a class `Renderer` from a file that has the same name as the package.
 
 ```python
 # filename must be same as package name
