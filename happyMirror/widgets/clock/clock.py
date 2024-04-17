@@ -8,9 +8,7 @@ class Renderer(BaseRenderer):
         pass
 
     def render(self) -> RenderResult:
-        # script_path = os.path.realpath(__file__).resolve('/static/js/clock.js')
         script_path = os.path.dirname(os.path.relpath(__file__)) + '/static/js/clock.js'
-        print("script_path: ", script_path)
 
         return {
             'script': open(script_path, 'r').read(),

@@ -1,5 +1,6 @@
 enabled_widgets = [
     'hello',
     'clock',
-    'quote'
+    'quote',
+    'simple_image'
 ]
