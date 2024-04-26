@@ -26,6 +26,7 @@ def create_app(widgets=None, test_config=None):
 
     for widget in widgets:
         widget['instance'] = widget['module'].Renderer()
+        widget['instance'].register_custom_routes(app)
 
     try:
         os.makedirs(app.instance_path)
