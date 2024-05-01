@@ -28,6 +28,10 @@ If your widget uses custom routes, eg. to display an image, you can do so by imp
 An example of how to do that can be found in the example widget 'simple_image'.
 
 # How to run
+## Testing
+While in the root of this repo, simply type `pytest` to run all the tests. Alternatively, if that does not work,
+try `pytest-3`.
+
 ## Development mode Windows
 Get all you need by typing `pip install -e .`, then run the application directly from VSCode.
 

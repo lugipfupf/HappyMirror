@@ -1,4 +1,13 @@
-api_url = 'https://api.api-ninjas.com/v1/quotes?category='
+# Base API Ninja URL
+api_url = 'https://api.api-ninjas.com/v1/quotes'
+
+# Once you registered your free account, you can find your api key in you profile.
+api_key = 'YOUR_API_KEY'
+
+# These are all categories as per May 2024.
+# Remove or comment the ones you don't want. Every time, a new quote is queried, a random category
+# will be chosen from this list. This is the same as setting
+# categories = None
 categories = [
     'age',
     'alone',
