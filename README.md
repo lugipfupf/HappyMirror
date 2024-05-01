@@ -1,3 +1,6 @@
+![Tests](https://github.com/lugipfupf/HappyMirror/actions/workflows/.github/workflows/python-app.yml/badge.svg)
+
+
 > *_Note_*
 > This project is in a very early development stage. While it will be used by me in a smart mirror project,
 > it is also my learning ground for Python.
