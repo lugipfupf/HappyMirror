@@ -20,7 +20,7 @@ class Renderer(BaseRenderer):
             self.config = self.__check_config()
 
     def next(self, category=None):
-        if len(self.config.api_key) is not 40:
+        if len(self.config.api_key) != 40:
             return [{
                 "quote": "NO API KEY SET IN CONFIG FILE",
                 "author": "'Quote' widget",
