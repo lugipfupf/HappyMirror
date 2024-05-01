@@ -4,7 +4,8 @@ version = "0.0.1"
 description = "WING IoT Project"
 dependencies = [
     "flask",
-    "requests"
+    "requests",
+    "requests-mock"
 ]
 
 [build-system]
