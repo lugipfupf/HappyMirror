@@ -1,6 +1,7 @@
 import unittest
 import requests_mock
 
+from happyMirror.httplib import BadRequest
 from .quote import Renderer
 from . import quote_config_example
 
@@ -10,7 +11,6 @@ class TestQuote(unittest.TestCase):
         self.API_BASE_URL = 'https://api.api-ninjas.com/v1/quotes'
         self.TEST_RESULT = '[{"quote": "Tis but a scratch", "author": "Black Knight"}]'
         self.TEST_API_KEY = '0000000000000000000000000000000000000000'
-
 
     @requests_mock.Mocker()
     def test_next(self, m):
@@ -41,22 +41,21 @@ class TestQuote(unittest.TestCase):
 
         self.__assert_result(result)
 
-
     @requests_mock.Mocker()
-    def test_next_with_no_apikey(self, m):
+    def test_next_with_invalid_apikey(self, m):
         m.get(
             self.API_BASE_URL,
-            text=self.TEST_RESULT
+            headers={'X-Api-Key': '1234'},
+            text='{"error": "Invalid API Key"}',
+            status_code=400
         )
 
         config = quote_config_example
         config.api_key = '1234'
         quote = Renderer(alt_config=quote_config_example)
 
-        result = quote.next()
-
-        self.assertEqual(result[0]['quote'], 'NO API KEY SET IN CONFIG FILE')
-        self.assertEqual(result[0]['author'], "'Quote' widget")
+        with self.assertRaises(BadRequest):
+            quote.next()
 
     def __assert_result(self, result):
         self.assertIsNotNone(result)

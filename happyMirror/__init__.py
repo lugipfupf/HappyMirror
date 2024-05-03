@@ -44,6 +44,8 @@ def create_app(widgets=None, test_config=None):
                 print(f"KeyError for: '{cur_widget}'", e)
             except AttributeError:
                 print("The module does not have the specified class or function.")
+            except Exception as e:
+                print(f"Exception for: '{cur_widget}'", e)
 
         return render_template('base.html', data=data)
     return app

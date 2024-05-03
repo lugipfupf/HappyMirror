@@ -2,7 +2,6 @@ import os
 import shutil
 import importlib
 import random
-import sys
 
 import requests
 import json
@@ -10,6 +9,8 @@ import json
 from flask import render_template_string
 
 from happyMirror.render import BaseRenderer, RenderResult
+
+from happyMirror.httplib import HttpError, BadRequest
 
 
 class Renderer(BaseRenderer):
@@ -20,22 +21,20 @@ class Renderer(BaseRenderer):
             self.config = self.__check_config()
 
     def next(self, category=None):
-        if len(self.config.api_key) != 40:
-            return [{
-                "quote": "NO API KEY SET IN CONFIG FILE",
-                "author": "'Quote' widget",
-                "category": category,
-            }]
-
         url = self.config.api_url
         if category is not None:
             url = url + '?category={}'.format(category)
 
-        quote = requests.get(
+        response = requests.get(
             url, headers={'X-Api-Key': self.config.api_key}, timeout=10
         )
 
-        return json.loads(quote.text)
+        if response.status_code == 200:
+            return json.loads(response.text)
+        if response.status_code == 400:
+            raise BadRequest(json.loads(response.text))
+
+        raise HttpError(json.loads(response.text))
 
     def render(self) -> RenderResult:
         category = None
@@ -43,11 +42,19 @@ class Renderer(BaseRenderer):
         if self.config.categories is not None:
             category = random.choice(self.config.categories)
 
-        quote = self.next(category)
-        return {
-            'view': render_template_string('{{ quote[0]["quote"] }} - {{ quote[0]["author"] }}', quote=quote),
-            'name': 'quote'
-        }
+            {'error': 'Invalid API Key.'}
+
+        try:
+            quote = self.next(category)
+            return {
+                'view': render_template_string('{{ quote[0]["quote"] }} - {{ quote[0]["author"] }}', quote=quote),
+                'name': 'quote'
+            }
+        except HttpError as e:
+            return {
+                'view': render_template_string('Quote Widget: {{ error["error"] }}', error=e.args[0]),
+                'name': 'quote'
+            }
 
     @staticmethod
     def __check_config():
@@ -61,6 +68,3 @@ class Renderer(BaseRenderer):
             shutil.copy(config_example_file, config_file)
 
         return importlib.import_module('quote_config')
-
-
-
