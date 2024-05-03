@@ -5,6 +5,36 @@
 > This project is in a very early development stage. While it will be used by me in a smart mirror project,
 > it is also my learning ground for Python.
 
+# How to run
+## Virtual Environment
+### On Windows:
+```shell
+venv\bin\activate`
+```
+### On MacOS / Linux: 
+```shell
+source venv/bin/activate`
+```
+
+### General
+```shell
+pip install -e .
+```
+
+## Testing
+While in the root of this repo, simply type `pytest` to run all the tests. Alternatively, if that does not work,
+try `pytest-3`.
+
+## Development mode Windows
+To run, either start directly from your preferred editor, or, if you have Flask installed, type
+```shell
+flask --app happyMirror run --debug
+```
+
+## Production mode
+Make sure, waitress is installed. On Linux, you can do so by typing `sudo apt install python3-waitress`
+Then run `waitress-serve --call 'HappyMirror:create_app'`
+
 # Developing widgets
 There a few sample widgets already included. On each page reload, each widgets `render()` method is called and
 a dictionary of type`RenderResult` is expected. Structure your module like so:
@@ -30,19 +60,4 @@ class Renderer(BaseRenderer):
 If your widget uses custom routes, eg. to display an image, you can do so by implementing `render.BaseRenderer.register_custom_routes`
 An example of how to do that can be found in the example widget 'simple_image'.
 
-# How to run
-## Testing
-While in the root of this repo, simply type `pytest` to run all the tests. Alternatively, if that does not work,
-try `pytest-3`.
 
-## Development mode Windows
-Get all you need by typing `pip install -e .`, then run the application directly from VSCode.
-
-To run, either start directly from your preferred editor, or, if you have Flask installed, type
-```shell
-flask --app happyMirror run --debug
-```
-
-## Production mode
-Make sure, waitress is installed. On Linux, you can do so by typing `sudo apt install python3-waitress`
-Then run `waitress-serve --call 'HappyMirror:create_app'`
