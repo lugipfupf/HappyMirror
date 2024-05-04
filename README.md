@@ -58,7 +58,7 @@ class Renderer(BaseRenderer):
 ```
 
 ## Custom Routes
-If your widget uses custom routes, eg. to display an image, you can do so by implementing `render.BaseRenderer.register_custom_routes`
+If your widget uses custom routes, e.g. to display an image, you can do so by implementing `render.BaseRenderer.register_custom_routes`
 An example of how to do that can be found in the example widget 'simple_image'.
-
+This method will be called automatically.
 

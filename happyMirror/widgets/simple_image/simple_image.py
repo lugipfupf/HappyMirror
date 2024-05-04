@@ -6,7 +6,6 @@ from happyMirror.render import BaseRenderer, RenderResult
 
 
 class Renderer(BaseRenderer):
-
     def register_custom_routes(self, app: Flask):
         print(f"Widget '{__name__}' is registering custom routes...")
         app.add_url_rule(
