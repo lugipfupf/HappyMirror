@@ -2,7 +2,12 @@ import os
 
 from flask import Flask, render_template
 
-import config
+# one works when running, one for testing
+try:
+    import config
+except ImportError:
+    from . import config
+
 from happyMirror.widgets_loader import WidgetsLoader
 
 
